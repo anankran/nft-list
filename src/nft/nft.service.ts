@@ -21,6 +21,9 @@ export class NFTService {
         'result': []
       };
       for (let key in nfts['result']) {
+        if (nfts['result'][key]['contract_type'] != nftDto.contractType) {
+          continue;
+        }
         response['result'][key] = {
           'tokenId': nfts['result'][key]['token_id'],
           'tokenAddress': nfts['result'][key]['token_address'],
