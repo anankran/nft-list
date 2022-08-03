@@ -21,6 +21,8 @@ services:
   mongodb:
     image : mongo:latest
     container_name: mongodb
+    environment:
+      MONGO_INITDB_DATABASE: nft
     volumes:
       - ./database:/data/db
     ports:
@@ -28,7 +30,6 @@ services:
     networks:
       - nesjs-network
     restart: always
-
 networks:
     nesjs-network:
       driver: bridge

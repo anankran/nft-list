@@ -1,12 +1,12 @@
 FROM node:12.19.0-alpine3.9 AS development
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/nft
 
 COPY package*.json ./
 
-RUN npm install glob rimraf
+RUN npm install glob rimraf -g npm-install-peers
 
-RUN npm install --only=development
+RUN npm install
 
 COPY . .
 

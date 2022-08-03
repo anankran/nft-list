@@ -1,11 +1,11 @@
 import { NotFoundException } from '@nestjs/common';
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { NFT } from './nft.model';
+import { NFTModel } from './nft.model';
 import { NFTDto } from './dto/nft.dto';
 import { NFTService } from './nft.service';
 import { NFTResponseDto } from './dto/nft-response.dto';
 
-@Resolver(of => NFT)
+@Resolver(of => NFTModel)
 export class NFTResolver {
   constructor(
     private readonly nftService: NFTService

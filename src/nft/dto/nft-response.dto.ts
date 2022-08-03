@@ -1,5 +1,5 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import { NFT } from '../nft.model';
+import { NFTModel } from '../nft.model';
 
 @ObjectType()
 export class NFTResponseDto {
@@ -9,12 +9,6 @@ export class NFTResponseDto {
   @Field()
   page: number;
 
-  @Field()
-  pageSize: number;
-
-  @Field()
-  cursor: string;
-
-  @Field(() => [NFT])
-  result: NFT[];
+  @Field(type => [NFTModel], { nullable: true })
+  nfts?: NFTModel[] | null;
 }

@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType({ description: 'NFT' })
-export class NFT {
+export class NFTModel {
   @Field(type => ID)
   tokenId: string;
 

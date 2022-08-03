@@ -1,9 +1,13 @@
 import { HttpModule } from '@nestjs/axios'
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Wallet, WalletSchema } from './nft/wallet.schema';
+import 'dotenv/config';
 
-export const config: any = [
+
+export const config = [
   ConfigModule.forRoot({
     isGlobal: true,
   }),
@@ -14,5 +18,7 @@ export const config: any = [
     driver: ApolloDriver,
     autoSchemaFile: true,
     playground: true,
-  })
+  }),
+  MongooseModule.forRoot(process.env.MONGODB_URL),
+  MongooseModule.forFeature([{ name: Wallet.name, schema: WalletSchema }]),
 ];
