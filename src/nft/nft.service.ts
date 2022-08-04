@@ -18,7 +18,6 @@ export class NFTService {
   ) {}
 
   async getNFTByProvider(nftDto: NFTDto): Promise<any> {
-    let nfts;
     let wallet;
     let compoundKey = `${this.configService.get<string>('NETWORK')}_${nftDto.wallet}`
 
@@ -30,10 +29,9 @@ export class NFTService {
     let createdAt = new Date();
     const currentTime = new Date();
 
-    // if (wallet) {
-    //   createdAt = new Date(wallet.createdAt.getTime() + 30 * 60000);
-    //   nfts = wallet.nfts;
-    // }
+    if (wallet) {
+      createdAt = new Date(wallet.createdAt.getTime() + 30 * 60000);
+    }
   
     if (wallet && currentTime >= createdAt) {
       await this.walletModel.deleteMany({ compoundKey: wallet.compoundKey });
@@ -84,17 +82,18 @@ export class NFTService {
       );
     }
 
-    nfts = this.formatResponse(wallet.nfts, nftDto.page, nftDto.contractType);
-    return nfts;
+    const response = this.formatResponse(wallet.nfts, nftDto.page, nftDto.contractType);
+    return response;
   }
 
   formatResponse (nfts, page, contractType) {
+    const pageSize = 50;
+    const limit = page * pageSize;
+    const offset = limit - pageSize;
     let formattedNfts = []
-    const limit = page * 50;
-    const offset = limit - 50;
     
     for (let i = offset; i < limit; i++) {
-      if (!nfts[i] || contractType !== nfts[i]['contract_type']) {
+      if (!nfts[i] || nfts[i]['contract_type'] !== contractType) {
         continue;
       }
 
@@ -115,11 +114,10 @@ export class NFTService {
         'lastMetadataSync': nfts[i]['last_metadata_sync'],
       });
     }
-    console.log()
 
     return {
       page: page,
-      total: Math.ceil(nfts.length / 50),
+      total: Math.ceil(nfts.length / pageSize),
       nfts: formattedNfts
     }
   }
