@@ -32,7 +32,7 @@ export class NFTService {
     if (wallet) {
       createdAt = new Date(wallet.createdAt.getTime() + 30 * 60000);
     }
-  
+ 
     if (wallet && currentTime >= createdAt) {
       await this.walletModel.deleteMany({ compoundKey: wallet.compoundKey });
       refreshWallet = true;
@@ -117,7 +117,7 @@ export class NFTService {
 
     return {
       page: page,
-      total: Math.ceil(nfts.length / pageSize),
+      total: Math.ceil(formattedNfts.length / pageSize),
       nfts: formattedNfts
     }
   }

@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3'
 services:
   nft_graphql:
     container_name: nft_graphql

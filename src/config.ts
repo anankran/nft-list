@@ -12,7 +12,7 @@ export const config = [
     isGlobal: true,
   }),
   HttpModule.register({
-    timeout: 6000
+    timeout: 60000
   }),
   GraphQLModule.forRoot<ApolloDriverConfig>({
     driver: ApolloDriver,
